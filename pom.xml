@@ -47,7 +47,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>trello_server</finalName>
+        <finalName>dev</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
