@@ -1,48 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="gbk">
-    <title>开发工具</title>
+    <meta charset="utf-8">
+    <title>寮�鍙戝伐鍏�</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- 引入 Bootstrap -->
+    <!-- 寮曞叆 Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-theme.min.css" rel="stylesheet">
     <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
-    <script src="js/base64.min.js"></script>
-    <script src="js/gb2312-utf8-convert.js"></script>
+    <script type="text/javascript" src="js/base64.min.js"></script>
+    <script type="text/javascript" src="js/gb2312-utf8-convert.js"></script>
+    <script type="text/javascript" src="js/angular.min.js"></script>
+    <script type="text/javascript" src="js/angular-route.min.js"></script>
 </head>
-<body>
+<body ng-app='myApp'>
 <!-- Header -->
-<header role="banner" id="header">
-
+<header role="banner" id="header" ng-include="'inc/header.html'">
 </header>
 <!-- Body -->
-<div class="container">
-    <div class="row">
-        <textarea id="inputCode" class="col-md-8 col-sm-10 col-xs-11" style="height: 300px"></textarea>
-        <div class="col-md-4 col-sm-10 col-xs-11 " style="padding-top: 20px;">
-            <input type="button" class="btn btn-primary" value="加密" id="encodeBtn">
-            <input type="button" class="btn btn-info" value="解密" id="decodeBtn">
-        </div>
-    </div>
-    <div class="row" style="margin-top: 30px;">
-        <textarea id="outputCode" class="col-md-8  col-sm-10 col-xs-11" style="height: 300px" disabled></textarea>
-    </div>
+<div class="container" ng-view>
+
 </div>
+
 <script type="text/javascript">
-    $(document).ready(function () {
-        $("#header").load("inc/header.html");
-        $("#encodeBtn").click(function () {
-            var inputTxt = $("#inputCode").val();
-            var outputTxt = Base64.encode(inputTxt);
-            $("#outputCode").val(outputTxt);
-        });
-        $("#decodeBtn").click(function () {
-            var inputTxt = $("#inputCode").val();
-            var outputTxt = Base64.decode(inputTxt);
-            $("#outputCode").val(outputTxt);
-        });
+    var app = angular.module('myApp', ['ngRoute'])
+        .config(['$routeProvider', function ($routeProvider) {
+            $routeProvider
+                .when('/base64', {templateUrl: 'tpl/base64.html'})
+                .when('/md5', {templateUrl: 'tpl/md5.html'})
+                .otherwise({redirectTo: '/base64'});
+        }]);
+    app.controller('base64Ctrl', function ($scope) {
+        $scope.code={};
+        $scope.encode=function()
+        {
+            $scope.code.outputText=Base64.encode($scope.code.inputText);
+        }
+        $scope.decode=function()
+        {
+            $scope.code.outputText=Base64.decode($scope.code.inputText);
+        }
     });
 </script>
 </body>
