@@ -13,33 +13,31 @@
     <script type="text/javascript" src="js/gb2312-utf8-convert.js"></script>
     <script type="text/javascript" src="js/angular.min.js"></script>
     <script type="text/javascript" src="js/angular-route.min.js"></script>
+    <script type="text/javascript" src="js/angular-ui-router.min.js"></script>
 </head>
 <body ng-app='myApp'>
 <!-- Header -->
 <header role="banner" id="header" ng-include="'inc/header.html'">
 </header>
 <!-- Body -->
-<div class="container" ng-view>
+<div class="container" ui-view>
 
 </div>
 
 <script type="text/javascript">
-    var app = angular.module('myApp', ['ngRoute'])
-        .config(['$routeProvider', function ($routeProvider) {
-            $routeProvider
-                .when('/base64', {templateUrl: 'tpl/base64.html'})
-                .when('/md5', {templateUrl: 'tpl/md5.html'})
-                .otherwise({redirectTo: '/base64'});
-        }]);
+    var app = angular.module('myApp', ['ui.router']).config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+        $urlRouterProvider.otherwise('/base64');
+        $stateProvider
+                .state('base64', {url: '/base64', template: 'tpl/base64.html'})
+                .state('md5', {url: '/md5', templateUrl: 'tpl/md5.html'});
+    }]);
     app.controller('base64Ctrl', function ($scope) {
-        $scope.code={};
-        $scope.encode=function()
-        {
-            $scope.code.outputText=Base64.encode($scope.code.inputText);
+        $scope.code = {};
+        $scope.encode = function () {
+            $scope.code.outputText = Base64.encode($scope.code.inputText);
         }
-        $scope.decode=function()
-        {
-            $scope.code.outputText=Base64.decode($scope.code.inputText);
+        $scope.decode = function () {
+            $scope.code.outputText = Base64.decode($scope.code.inputText);
         }
     });
 </script>
