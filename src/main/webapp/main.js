@@ -2,10 +2,12 @@
 requirejs.config({
     "baseUrl": "lib",
     "paths": {
-        "md5": "md5.min"
+        "md5": "md5.min",
+        "base64":"base64",
+        "lib":"../lib"
     }
 });
-var app = angular.module('myApp', ['ui.router','oc.lazyLoad']);
+var app = angular.module('myApp', ['ui.router', 'oc.lazyLoad']);
 app.config(["$provide", "$compileProvider", "$controllerProvider", "$filterProvider",
     function ($provide, $compileProvider, $controllerProvider, $filterProvider) {
         app.controller = $controllerProvider.register;
@@ -25,30 +27,28 @@ app.constant('Modules_Config', [
         ]*/
     }
 ]);
-app.config(["$ocLazyLoadProvider","Modules_Config",routeFn]);
-function routeFn($ocLazyLoadProvider,Modules_Config){
+app.config(["$ocLazyLoadProvider", "Modules_Config", routeFn]);
+
+function routeFn($ocLazyLoadProvider, Modules_Config) {
     $ocLazyLoadProvider.config({
-        debug:false,
-        events:false,
-        modules:Modules_Config
+        debug: false,
+        events: false,
+        modules: Modules_Config
     });
 };
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/base64');
     $stateProvider
-        .state('base64', {url: '/base64', templateUrl: 'tpl/base64.html'})
-        .state('md5', {url: '/md5', templateUrl: 'encryption/md5/md5.html', resolve:{
-            loadMyCtrl:['$ocLazyLoad',function($ocLazyLoad){
-                return $ocLazyLoad.load('encryption/md5/md5.js');
+        .state('base64', {url: '/base64', templateUrl: 'encryption/base64/base64.html',resolve:{
+            loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+                return $ocLazyLoad.load('encryption/base64/base64.js');
             }]
-        }    });
+        }})
+        .state('md5', {
+            url: '/md5', templateUrl: 'encryption/md5/md5.html', resolve: {
+                loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load('encryption/md5/md5.js');
+                }]
+            }
+        });
 }]);
-app.controller('base64Ctrl', function ($scope) {
-    $scope.code = {};
-    $scope.encode = function () {
-        $scope.code.outputText = Base64.encode($scope.code.inputText);
-    }
-    $scope.decode = function () {
-        $scope.code.outputText = Base64.decode($scope.code.inputText);
-    }
-});
