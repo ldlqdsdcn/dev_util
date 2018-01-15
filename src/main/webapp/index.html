@@ -28,7 +28,7 @@
     var app = angular.module('myApp', ['ui.router']).config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('/base64');
         $stateProvider
-                .state('base64', {url: '/base64', template: 'tpl/base64.html'})
+                .state('base64', {url: '/base64', templateUrl: 'tpl/base64.html'})
                 .state('md5', {url: '/md5', templateUrl: 'tpl/md5.html'});
     }]);
     app.controller('base64Ctrl', function ($scope) {
