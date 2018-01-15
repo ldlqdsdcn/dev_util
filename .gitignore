@@ -31,3 +31,6 @@ hs_err_pid*
 .idea/modules.xml
 .idea/workspace.xml
 *.iml
+target/*
+target
+
