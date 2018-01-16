@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>以太坊钱包</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入 Bootstrap -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-theme.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../lib/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../lib/bootstrap.js"></script>
+    <script type="text/javascript" src="../lib/bignumber.min.js"></script>
+    <script type="text/javascript" src="../lib/web3.min.js"></script>
+</head>
+<body>
+<!-- Header -->
+<header role="banner" id="header">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">以太坊钱包</a>
+            </div>
+            <div>
+                <ul class="nav navbar-nav">
+                    <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle"
+                                            data-toggle="dropdown">区块链</a>
+                        <ul class="dropdown-menu">
+                            <!-- <li><a href="/blockchain/eth-wallet.html">以太坊钱包</a></li>-->
+                            <li><a ui-sref="ethereum">以太坊钱包</a></li>
+
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                            常用加密
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a ui-sref="base64">base64</a></li>
+                            <li><a ui-sref="md5">md5</a></li>
+                            <li><a href="#">Jasper Report</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">分离的链接</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">另一个分离的链接</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../index.html">返回首页</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<!-- Body -->
+<div class="container">
+    web3j版本：<input type="text" disabled id="version"><br>
+    <h4>钱包地址列表</h4>
+    <table class="table table-bordered">
+        <thead>
+        <th>钱包地址</th>
+        <th>钱包金额</th>
+        </thead>
+        <tbody id="address"></tbody>
+    </table>
+</div>
+<script type="text/javascript">
+    if (typeof web3 !== 'undefined') {
+        web3 = new Web3(web3.currentProvider);
+    } else {
+        // set the provider you want from Web3.providers
+        web3 = new Web3(new Web3.providers.HttpProvider("http://192.168.0.15:8545"));
+    }
+    web3.eth.getBlock(48, function (error, result) {
+        if (!error)
+            console.log(result)
+        else
+            console.error(error);
+    });
+    $("#version").val(web3.version.api);
+    var accounts = web3.eth.accounts;
+    var address = "";
+    for (var i = 0; i < accounts.length; i++) {
+        address = address + "<tr><td>" + accounts[i] + "</td><td>" + web3.fromWei(web3.eth.getBalance(accounts[i]), "ether") + "</td></tr>";
+    }
+    $("#address").html(address);
+
+    function watchBalance() {
+        $("#coinbase").html(web3.eth.accounts[0]);
+    }
+</script>
+</body>
+</html>

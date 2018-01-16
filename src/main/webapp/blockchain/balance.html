@@ -1,0 +1,37 @@
+<!doctype>
+<html>
+
+<head>
+    <script type="text/javascript" src="../lib/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../lib/web3.min.js"></script>
+    <script type="text/javascript" src="../lib/bignumber.min.js"></script>
+<script type="text/javascript">
+
+    if (typeof web3 !== 'undefined') {
+        web3 = new Web3(web3.currentProvider);
+    } else {
+        // set the provider you want from Web3.providers
+        web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+    }
+    web3.eth.getBlock(48, function(error, result){
+        if(!error)
+            console.log(result)
+        else
+            console.error(error);
+    });
+    function  watchBalance() {
+        $("#coinbase").html(web3.eth.accounts[0]);
+    }
+</script>
+</head>
+<body>
+    <h1>coinbase balance</h1>
+    <button type="button" onClick="watchBalance();">watch balance</button>
+    <div></div>
+    <div id="coinbase"></div>
+    <div id="original"></div>
+    <div id="current"></div>
+    <div id="diff"></div>
+</body>
+</html>
+

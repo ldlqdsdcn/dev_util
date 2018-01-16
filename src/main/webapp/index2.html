@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>required test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入 Bootstrap -->
+    <script type="text/javascript" src="lib/require.js" ></script>
+</head>
+<body>
+</body>
+<script type="text/javascript">
+    requirejs.config({"baseUrl": "lib"});
+
+    require(['jquery-3.2.1.min','base64', 'md5.min', 'bignumber.min','web3'], function (jQuery,base64, md5, BigNumber,web3){
+        if (typeof web3 !== 'undefined') {
+            web3 = new Web3(web3.currentProvider);
+        } else {
+            // set the provider you want from Web3.providers
+            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+        }
+        alert(web3.version);
+        alert(web3.version.api);
+
+
+    });
+</script>
+</html>

@@ -3,8 +3,7 @@ requirejs.config({
     "baseUrl": "lib",
     "paths": {
         "md5": "md5.min",
-        "base64":"base64",
-        "lib":"../lib"
+        "base64":"base64"
     }
 });
 var app = angular.module('myApp', ['ui.router', 'oc.lazyLoad']);
@@ -50,5 +49,9 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
                     return $ocLazyLoad.load('encryption/md5/md5.js');
                 }]
             }
-        });
+        }).state('ethereum',{url:'/ethereum',templateUrl:'blockchain/ethereum.html', resolve: {
+        loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+            return $ocLazyLoad.load(['blockchain/ethereum.js']);
+        }]
+    }});
 }]);
