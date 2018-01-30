@@ -1,0 +1,13 @@
+<div class="content" ng-app="md5" ng-controller="passwdCtrl">
+    <h3>生成密码</h3>
+    <form class="form-inline">
+        <div class="form-group">
+            <label for="passwodLength">密码长度</label>
+            <input type="number" class="form-control" id="passwodLength" placeholder="密码长度" ng-model="size">
+        </div>
+        <button type="submit" class="btn btn-default"   ng-click="genPasswd()">生成</button>
+    </form>
+    <div class="row" style="margin-top: 30px;">
+        <textarea id="outputCode" class="form-control"  disabled>{{outputText}}</textarea>
+    </div>
+</div>

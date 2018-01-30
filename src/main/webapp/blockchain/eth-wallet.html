@@ -11,6 +11,8 @@
     <script type="text/javascript" src="../lib/bootstrap.js"></script>
     <script type="text/javascript" src="../lib/bignumber.min.js"></script>
     <script type="text/javascript" src="../lib/web3.min.js"></script>
+    <script type="text/javascript" src="../lib/utf8.js"></script>
+    <script type="text/javascript" src="../lib/base64.js"></script>
 </head>
 <body>
 <!-- Header -->
@@ -45,23 +47,56 @@
                             <li><a href="#">另一个分离的链接</a></li>
                         </ul>
                     </li>
-                    <li><a href="../index.html">返回首页</a></li>
+                    <li><a href="../index-angular.html">返回首页</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 </header>
 <!-- Body -->
-<div class="container">
+<div class="container" style="padding-bottom: 30px;">
     <h1>以太坊钱包</h1>
-    <div class="row"><label>web3j版本：</label><span id="version"></span></div>
-    <table class="table table-bordered">
-        <thead>
-        <th>钱包地址</th>
-        <th>钱包金额</th>
-        </thead>
-        <tbody id="address"></tbody>
-    </table>
+    <div class="container-fluid" id="container">
+        <div class="row"><label>web3j版本：</label><span id="version"></span></div>
+        <table class="table table-bordered">
+            <thead>
+            <th>钱包地址</th>
+            <th>钱包金额</th>
+            <th>操作</th>
+            </thead>
+            <tbody id="accounts"></tbody>
+        </table>
+        <div>
+            <h2>转换</h2>
+            <div class="row">
+                <textarea  id="inputTxt" class="col-sm-10 col-lg-10" style="height: 200px"></textarea>
+                <input type="button" class="btn btn-info" value="toHex" onclick="toHex()">
+                <input type="button" class="btn btn-success" value="toAscii" onclick="toAscii()">
+            </div>
+
+            <h2>输出值</h2>
+            <div class="row">
+            <textarea  id="outputTxt" class="col-sm-10 col-lg-10" style="height: 200px"></textarea>
+            </div>
+        </div>
+        <h2>以太币转换</h2>
+        <div class="row">
+            <input type="text" id="inputValue">  <input type="button" class="btn btn-info" value="数值转以太币" onclick="toWei()">
+            <input type="button" class="btn btn-success" value="以太币转数值" onclick="fromWei()">
+        </div>
+        <h2>输出值：</h2>
+        <div class="row">
+            <input type="text" id="outputValue">
+        </div>
+        <div class="row">
+            <label>hashrate:</label><span id="hashrate"></span>
+        </div>
+        <div class="row">
+            汽油价格：<span id="gasPrice"></span>
+            <label>当前区块数：</label><span id="blockNumber"></span>
+        </div>
+    </div>
+
 </div>
 <script type="text/javascript">
     if (typeof web3 !== 'undefined') {
@@ -80,13 +115,48 @@
     var accounts = web3.eth.accounts;
     var address = "";
     for (var i = 0; i < accounts.length; i++) {
-        address = address + "<tr><td>" + accounts[i] + "</td><td>" + web3.fromWei(web3.eth.getBalance(accounts[i]), "ether") + "</td></tr>";
-    }
-    $("#address").html(address);
 
-    function watchBalance() {
-        $("#coinbase").html(web3.eth.accounts[0]);
+        address = address + "<tr><td>" + accounts[i] + "</td><td>" + web3.fromWei(web3.eth.getBalance(accounts[i]), "ether")
+            + "</td><td><input type='button' class='btn btn-sm btn-info' value='操作' onclick='showDetail(\""+accounts[i]+"\")'></td></tr>";
     }
+    $("#accounts").html(address);
+    function showDetail(account) {
+
+    };
+    web3.eth.getGasPrice(function(error, result){ console.log(result); });
+    var str = web3.toHex({name: 'liudalei'});
+    console.log(str); // '0x7b2274657374223a2274657374227d'
+    function toHex() {
+        var inputTxt=$("#inputTxt").val();
+        var utf8Txt=utf8.encode(inputTxt);
+        var base64Str=base64.encode(utf8Txt);
+        $("#outputTxt").val(web3.toHex(base64Str));
+    }
+    function toAscii() {
+        var inputTxt=$("#inputTxt").val();
+        var asciiTxt=web3.toAscii(inputTxt)
+        var base64DeStr=base64.decode(asciiTxt);
+        var txt=utf8.decode(base64DeStr);
+        $("#outputTxt").val(txt);
+    }
+    function fromWei() {
+        var input=parseFloat($("#inputValue").val(),10);
+        $("#outputValue").val(web3.fromWei(input,"ether"));
+    }
+    function toWei() {
+        var input=parseFloat($("#inputValue").val(),10);
+        $("#outputValue").val(web3.toWei(input,"ether"));
+    }
+    var hashrate = web3.eth.hashrate;
+    $("#hashrate").html(hashrate);
+    console.log(hashrate); // 493736
+
+    var gasePrice=web3.eth.gasPrice;
+    console.log("web3.eth.gasPrice="+web3.eth.gasPrice);
+    $("#gasPrice").html(web3.eth.gasPrice+"");
+
+    var number = web3.eth.blockNumber;
+    $("#blockNumber").html(number+"");
 </script>
 </body>
 </html>
