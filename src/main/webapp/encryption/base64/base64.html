@@ -1,18 +1,15 @@
-<div class="content" >
+<div class="content" ng-controller="base64Ctrl">
     <h3>base64加密-解密</h3>
     <h4>输入</h4>
     <div class="row">
-        <textarea id="inputCode" class="col-md-8 col-sm-10 col-xs-10" style="height: 300px" ></textarea>
+        <textarea id="inputCode" class="col-md-8 col-sm-10 col-xs-10" style="height: 300px" ng-model="code.inputText"></textarea>
         <div class="col-md-4 col-xs-10 col-sm-10" style="padding-top: 10px;">
-            <input type="button" class="btn btn-primary" value="加密" id="encodeBtn">
-            <input type="button" class="btn btn-info" value="解密" id="decodeBtn">
+            <input type="button" class="btn btn-primary" value="加密" id="encodeBtn" ng-click="encode()">
+            <input type="button" class="btn btn-info" value="解密" id="decodeBtn" ng-click="decode()">
         </div>
     </div>
     <h4>输出</h4>
     <div class="row">
-        <textarea id="outputCode" class="col-md-8 col-sm-10 col-xs-10" style="height: 300px" disabled></textarea>
+        <textarea id="outputCode" class="col-md-8 col-sm-10 col-xs-10" style="height: 300px" disabled>{{code.outputText}}</textarea>
     </div>
 </div>
-<script type="text/javascript" src="/lib/utf8.js"></script>
-<script type="text/javascript" src="/lib/base64.js"></script>
-<script type="text/javascript" src="/encryption/base64/base64.js"></script>
