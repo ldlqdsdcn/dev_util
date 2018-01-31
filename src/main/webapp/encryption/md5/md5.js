@@ -5,5 +5,6 @@ app.controller('md5Ctrl', function ($scope) {
     $scope.code = {};
     $scope.encode = function () {
         $scope.code.outputText = $scope.md5($scope.code.inputText);
+        $scope.code.upperText = $scope.code.outputText.toLocaleUpperCase();
     }
 });

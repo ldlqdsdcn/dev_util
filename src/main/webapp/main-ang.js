@@ -57,5 +57,9 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
         loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
             return $ocLazyLoad.load(['encryption/passwd/passwd.js']);
         }]
+    }}).state('binary',{url:'/binary',templateUrl:'encryption/hex/toHex.html', resolve: {
+        loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+            return $ocLazyLoad.load(['encryption/hex/toHex.js']);
+        }]
     }});
 }]);
