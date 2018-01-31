@@ -53,5 +53,9 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
         loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
             return $ocLazyLoad.load(['blockchain/ethereum.js']);
         }]
+    }}).state('passwd',{url:'/passwd',templateUrl:'encryption/passwd/passwd.html', resolve: {
+        loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+            return $ocLazyLoad.load(['encryption/passwd/passwd.js']);
+        }]
     }});
 }]);
