@@ -61,5 +61,9 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
         loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
             return $ocLazyLoad.load(['encryption/hex/toHex.js']);
         }]
+    }}).state('restful',{url:'/restful',templateUrl:'api/restful/restful.html', resolve: {
+        loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
+            return $ocLazyLoad.load(['api/restful/restful.js']);
+        }]
     }});
 }]);

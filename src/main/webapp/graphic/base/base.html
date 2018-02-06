@@ -1,0 +1,51 @@
+<div class="content">
+    <h3>基本算法</h3>
+    <h4>输入</h4>
+    <div>
+        <h4>第一个点</h4>
+        <label for="x1" class="control-label">x1 </label><input type="number" id="x1"  class="input-sm">&nbsp;
+        <label for="y1" class="control-label">y1 </label><input type="number" id="y1"  class="input-sm"><br>
+        <label for="x2" class="control-label">x2 </label><input type="number" id="x2" class="input-sm">&nbsp;
+        <label for="y2" class="control-label">y2 </label><input type="number" id="y2"   class="input-sm"><br>
+        <input type="button" value="计算" onclick="calculate() ">
+        直线长度<input type="number" id="length">
+    </div>
+    <h4>输出</h4>
+    <svg width="800px" height="800px" version="1.1"
+         xmlns="http://www.w3.org/2000/svg">
+
+        <line id ="line" x1="0" y1="0" x2="0" y2="0"
+              style="stroke:rgb(99,99,99);stroke-width:2"/>
+
+
+        <rect x="20" y="20" rx="20" ry="20" width="150"
+              height="70" style="fill:blue;stroke:black;
+stroke-width:1;fill-opacity:0.1;stroke-opacity:0.9"/>
+    </svg>
+    <script type="text/javascript">
+        function Point(x,y) {
+            this.x=x;
+            this.y=y;
+        }
+        Point.prototype.getDistance=function(point)
+        {
+            var xvalue=this.x-point.x;
+            var yvalue=this.y-point.y;
+            return
+        }
+        function calculate() {
+            var x1=$("#x1").val();
+            var y1=$("#y1").val();
+            var x2=$("#x2").val();
+            var y2=$("#y2").val();
+            var x=Math.abs(x2-x1);
+            var y=Math.abs(y2-y1);
+            $("#length").val(Math.sqrt(x*x+y*y));
+            $("#line").attr("x1",x1);
+            $("#line").attr("x2",x2);
+            $("#line").attr("y1",y1);
+            $("#line").attr("y2",y2);
+
+        }
+    </script>
+</div>

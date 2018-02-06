@@ -1,7 +1,9 @@
 <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">开发工具</a>
+            <a class="navbar-brand" href="#">
+                开发工具
+            </a>
         </div>
         <div>
             <ul class="nav navbar-nav">
@@ -12,7 +14,20 @@
 
                     </ul>
                 </li>
-                <li><a href="#">SVN</a></li>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">图形处理
+                    <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a ui-sref="graphic_base">基本算法</a></li>
+                        <li><a ui-sref="base">图形转二进制</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">接口调试
+                    <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a ui-sref="restful">Restful接口</a></li>
+                        <li><a ui-sref="base">WebService接口</a></li>
+                    </ul>
+                </li>
                 <li class="dropdown">
                     <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
                         常用加密

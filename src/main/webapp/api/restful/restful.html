@@ -1,0 +1,40 @@
+<div class="content" ng-controller="restfulCtrl">
+    <h3>Rest 接口调试</h3>
+    <div class="form-group">
+
+        <div class="col-sm-9">
+            <input type="url" ng-model="url" class="form-control" placeholder="请输入url地址">
+        </div>
+        <div class="col-sm-2">
+            <select ng-model="type" ng-options="x for x in typeList" class="form-control"></select>
+        </div>
+        <div class="col-sm-1 control-label"> <input type="button" class="btn btn-primary" value="发送" id="encodeBtn" ng-click="send()"></div>
+    </div>
+
+
+        <input type="text" class="input-sm" placeholder="header key" ng-model="header.key">
+        <input type="text" class="input-sm" placeholder="header value" ng-model="header.value">
+        <input type="button" class="btn btn-primary" value="添加header"  ng-click="addHeader()">
+    <table  class="table table-hover table-striped table-condensed">
+        <thead><tr><th>key</th><th>value</th><th>删除</th></tr></thead>
+        <tbody>
+
+        <tr ng-repeat="model in headerList track by $index" ng-class-even="success">
+            <td>{{model.key}}</td>
+            <td>
+                {{model.value}}
+            </td>
+             <td>
+                 <button class="btn btn-danger btn-sm" ng-click="removeHeader(model.key)">删除</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+        <textarea  class="col-md-8 col-sm-10 col-xs-10" style="height: 300px" ng-model="inputText"></textarea>
+    <h4>输出</h4>
+    <div class="row">
+        <div id="output">
+            {{outputText}}
+        </div>
+    </div>
+</div>
