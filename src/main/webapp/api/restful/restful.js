@@ -43,6 +43,19 @@ app.controller('restfulCtrl', function ($scope, $http) {
         $scope.headerList.forEach(function (value, index, array) {
             headers[value.key] = value.value;
         });
+        jQuery.ajax({
+            type: "POST",
+            url: "http://localhost:8080/Token",
+            cache: false,
+            data: postdata,
+            dataType: "json",
+            contentType: "json",  // <=== Added
+            success: getSuccess,
+            error: getFail
+        });
+
+
+
         $http({
             method: $scope.type,
             url: $scope.url,
